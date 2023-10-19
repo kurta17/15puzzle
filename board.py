@@ -1,4 +1,5 @@
 import turtle as t
+import random
 class Board():
     def __init__(self):
         self.tiles = [
@@ -8,23 +9,24 @@ class Board():
             [9, 14, 15, 0]  # Use 0 to represent the empty cell
         ]
         self.void_pos = (3, 3)
-
-    def up(self):
+        self.random_tiles()
+    
+    def down(self):
         up_to_void_pos = (self.void_pos[0] - 1, self.void_pos[1])
         self.swap_with_void(up_to_void_pos)
         self.draw_tiles()  
     
-    def down(self):
+    def up(self):
         up_to_void_pos = (self.void_pos[0] + 1, self.void_pos[1])
         self.swap_with_void(up_to_void_pos)
         self.draw_tiles()  
 
-    def left(self):
+    def right(self):
         up_to_void_pos = (self.void_pos[0] , self.void_pos[1] -1)
         self.swap_with_void(up_to_void_pos)
         self.draw_tiles()
 
-    def right(self):
+    def left(self):
         up_to_void_pos = (self.void_pos[0] , self.void_pos[1] + 1)
         self.swap_with_void(up_to_void_pos)
         self.draw_tiles()
@@ -77,3 +79,24 @@ class Board():
             t.right(90)
             t.forward(50)
             t.left(90)  
+
+    def random_tiles(self):
+        tiles = list(range(1,16))
+        random.shuffle(tiles)
+        if self.n_inversion(self.tiles) % 2 == 0 :
+            self.tiles[0][0], self.tiles[0][1] = self.tiles[0][1], self.tiles[0][0]
+
+        self.tiles[0] = tiles[0:4]
+        self.tiles[1] = tiles[7:3:-1]
+        self.tiles[2] = tiles[8:12]
+        self.tiles[3] = tiles[16:11:-1] + [None]
+        
+    def n_inversion(self, arr):
+        count = 1
+        for i in range(len(arr)):
+            for x in range(i + 1, len(arr)) :
+                if self.tiles[i] > self.tiles[x]:
+                    count += 1
+        return count
+
+    
