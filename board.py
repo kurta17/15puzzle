@@ -85,14 +85,13 @@ class Board():
         random.shuffle(tiles)
         if self.n_inversion(self.tiles) % 2 == 0 :
             self.tiles[0][0], self.tiles[0][1] = self.tiles[0][1], self.tiles[0][0]
-
         self.tiles[0] = tiles[0:4]
         self.tiles[1] = tiles[7:3:-1]
         self.tiles[2] = tiles[8:12]
         self.tiles[3] = tiles[16:11:-1] + [None]
         
     def n_inversion(self, arr):
-        count = 1
+        count = 0
         for i in range(len(arr)):
             for x in range(i + 1, len(arr)) :
                 if self.tiles[i] > self.tiles[x]:
